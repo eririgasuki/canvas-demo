@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Canvas-demo</title>
     <link rel="stylesheet" href="style.css">
@@ -11,15 +11,35 @@
 
 <body>
     <canvas id="canvas">
-
     </canvas>
     <div class="actions" id="actions">
-        <button id="eraser">橡皮擦</button>
-        <button id="brush">笔刷</button>
+        <svg id="pencil" class="icon active" aria-hidden="true">
+            <use xlink:href="#icon-pan_icon"></use>
+        </svg>
+        <svg id="eraser" class="icon" aria-hidden="true">
+            <use xlink:href="#icon-Eraser-Tool"></use>
+        </svg>
+        <svg id="clear" class="icon" aria-hidden="true">
+            <use xlink:href="#icon-lajitong"></use>
+        </svg>
+        <svg id="download" class="icon" aria-hidden="true">
+            <use xlink:href="#icon-download"></use>
+        </svg>
     </div>
-    <script src="main.js">
-     
-    </script>
+    <ol class="colors">
+        <li id="red" class="red active"></li>
+        <li id="yellow" class="yellow"></li>
+        <li id="blue" class="blue"></li>
+        <li id="black" class="black"></li>
+    </ol>
+    <ol class="sizes">
+        <li id="thin" class="thin active"></li>
+        <li id="normal" class="normal"></li>
+        <li id="thick" class="thick"></li>
+    </ol>
+    <script src="main.js"></script>
+    <script src="//at.alicdn.com/t/font_992640_mqm2q8hqfxj.js"></script>
+
 </body>
 
 </html>

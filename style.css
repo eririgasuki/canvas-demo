@@ -86,3 +86,8 @@ li{
     box-shadow:  0 0 3px rgba(233, 23, 23, 0.9);
 
 }
+.uploadImg{
+    position: fixed;
+    top: 0;
+    left: -10000px;
+}

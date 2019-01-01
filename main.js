@@ -11,11 +11,28 @@ canvas.width = pageWidth
 canvas.height = pageHeight
 
 clear.onclick = function () {
-    console.log('1');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+upload.onclick = function () {
+    getImage.click();
+}
 
-download.onclick = function(){
+getImageSrc = function () {
+
+    var files = getImage.files[0]
+    var url = URL.createObjectURL(files)
+    var img = new Image();
+    img.src = url
+    img.onload = function () {
+        canvas.width = Math.max(img.width,canvas.width)
+        canvas.height = Math.max(img.height,canvas.height)
+        ctx.drawImage(img, 0, 0)
+    }
+
+}
+
+
+download.onclick = function () {
     var url = canvas.toDataURL("img.png")
     var a = document.createElement('a')
     document.body.appendChild(a)

@@ -24,11 +24,21 @@ getImageSrc = function () {
     var img = new Image();
     img.src = url
     img.onload = function () {
-        canvas.width = Math.max(img.width,canvas.width)
-        canvas.height = Math.max(img.height,canvas.height)
-        ctx.drawImage(img, 0, 0)
-    }
+        if (pageWidth > 500) {
+            canvas.width = Math.max(img.width, canvas.width)
+            canvas.height = Math.max(img.height, canvas.height)
+            ctx.drawImage(img, 0, 0)
+        } else {
+            console.log(pageWidth)
+            var drawWidth = Math.min(img.width, canvas.width)
+            var drawHeight = img.height*drawWidth/img.width
+            console.log(img.height)
+            console.log(drawWidth)
+            console.log(drawHeight)
+            ctx.drawImage(img, 0, 0,drawWidth,drawHeight)
 
+        }
+    }
 }
 
 

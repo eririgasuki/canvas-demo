@@ -1,6 +1,7 @@
 #canvas{
     background: white;
     display: block;
+    position: absolute;
 }
 *{
     margin: 0;
@@ -28,6 +29,10 @@
 }
 
 .actions > svg.active{
+    fill:red;
+    transform: scale(1.2);
+}
+.sizes > svg.actived{
     fill:red;
     transform: scale(1.2);
 }
@@ -82,7 +87,7 @@ li{
 .sizes > li.thick{
     border: 6px solid #000;
 }
-.sizes > li.active{
+.sizes > li.activeline{
     box-shadow:  0 0 3px rgba(233, 23, 23, 0.9);
 
 }
@@ -90,4 +95,34 @@ li{
     position: fixed;
     top: 0;
     left: -10000px;
+}
+.sizes > svg{
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 10px 0 0 10px;
+    transition: 0.3s;
+}
+.AR1, .AR2{
+    position: absolute;
+    width: 800px;
+    height: 1px;
+    background-image: linear-gradient(to right, #000 0%, #000 50%, transparent 50%);
+    background-size: 8px 1px;
+    background-repeat: repeat-x;
+    top: 300px;
+    left: -100px;
+    z-index: 100;
+}
+.AR1, .AR2:hover{
+    cursor: pointer;
+}
+.AR1{
+    transform: rotate(120deg);
+}
+.AR2{
+    transform: rotate(60deg);
+}
+.unseen{
+    display: none;
 }

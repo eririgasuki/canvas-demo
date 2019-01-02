@@ -1,14 +1,22 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
-autoSetCanvasSize();
-listenToUser(canvas);
-
-
 var pageWidth = document.documentElement.clientWidth;
 var pageHeight = document.documentElement.clientHeight;
 canvas.width = pageWidth
 canvas.height = pageHeight
+
+autoSetCanvasSize();
+listenToUser(canvas);
+hidePhoneRuler();
+
+function hidePhoneRuler() {
+    console.log(pageWidth)
+    if (pageWidth < 500) {
+        ruler1.style.display = 'none';
+        ruler2.style.display = 'none';
+    }
+}
 
 clear.onclick = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -25,18 +33,13 @@ getImageSrc = function () {
     img.src = url
     img.onload = function () {
         if (pageWidth > 500) {
-            canvas.width = Math.max(img.width, canvas.width)
-            canvas.height = Math.max(img.height, canvas.height)
-            ctx.drawImage(img, 0, 0)
+            canvas.width = Math.max(img.width + 60, canvas.width)
+            canvas.height = Math.max(img.height + 50, canvas.height)
+            ctx.drawImage(img, 60, 50)
         } else {
-            console.log(pageWidth)
             var drawWidth = Math.min(img.width, canvas.width)
-            var drawHeight = img.height*drawWidth/img.width
-            console.log(img.height)
-            console.log(drawWidth)
-            console.log(drawHeight)
-            ctx.drawImage(img, 0, 0,drawWidth,drawHeight)
-
+            var drawHeight = img.height * drawWidth / img.width
+            ctx.drawImage(img, 0, 0, drawWidth, drawHeight)
         }
     }
 }
@@ -112,22 +115,77 @@ var lineWidth = 4
 
 thin.onclick = function () {
     lineWidth = 4
-    thin.classList.add('active')
-    normal.classList.remove('active')
-    thick.classList.remove('active')
+    thin.classList.add('activeline')
+    normal.classList.remove('activeline')
+    thick.classList.remove('activeline')
 }
 normal.onclick = function () {
     lineWidth = 8
-    thin.classList.remove('active')
-    normal.classList.add('active')
-    thick.classList.remove('active')
+    thin.classList.remove('activeline')
+    normal.classList.add('activeline')
+    thick.classList.remove('activeline')
 }
 thick.onclick = function () {
     lineWidth = 12
-    thin.classList.remove('active')
-    normal.classList.remove('active')
-    thick.classList.add('active')
+    thin.classList.remove('activeline')
+    normal.classList.remove('activeline')
+    thick.classList.add('activeline')
 }
+var auxiliary1 = false
+var auxiliary2 = false
+ruler1.onclick = function () {
+    if (auxiliary1) {
+        ruler1.classList.remove('actived')
+        auxiliary1 = false
+        AR1.classList.add('unseen')
+    } else {
+        ruler1.classList.add('actived')
+        auxiliary1 = true
+        AR1.classList.remove('unseen')
+    }
+}
+ruler2.onclick = function () {
+    if (auxiliary2) {
+        ruler2.classList.remove('actived')
+        auxiliary2 = false
+        AR2.classList.add('unseen')
+    } else {
+        ruler2.classList.add('actived')
+        auxiliary2 = true
+        AR2.classList.remove('unseen')
+    }
+}
+
+var moveFlag = false
+AR1.onmousedown = function (eee) {
+    moveFlag = true
+    var x = eee.pageX - AR1.offsetLeft
+    var y = eee.pageY - AR1.offsetTop
+    document.onmousemove = function (eee) {
+        if (moveFlag) {
+            AR1.style.left = eee.pageX - x + 'px'
+            AR1.style.top = eee.pageY - y + 'px'
+            AR1.onmouseup = function () {
+                moveFlag = false
+            }
+        }
+    }
+}
+AR2.onmousedown = function (eee) {
+    moveFlag = true
+    var x = eee.pageX - AR2.offsetLeft
+    var y = eee.pageY - AR2.offsetTop
+    document.onmousemove = function (eee) {
+        if (moveFlag) {
+            AR2.style.left = eee.pageX - x + 'px'
+            AR2.style.top = eee.pageY - y + 'px'
+            AR2.onmouseup = function () {
+                moveFlag = false
+            }
+        }
+    }
+}
+
 
 /* 设置函数 */
 
@@ -197,8 +255,8 @@ function listenToUser(canvas) {
         }
     } else {
         canvas.onmousedown = function (aaa) {
-            var x = aaa.clientX
-            var y = aaa.clientY
+            var x = aaa.pageX
+            var y = aaa.pageY
             using = true
             if (eraserEnable) {
                 ctx.clearRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth)
@@ -212,8 +270,8 @@ function listenToUser(canvas) {
             }
         }
         canvas.onmousemove = function (aaa) {
-            var x = aaa.clientX
-            var y = aaa.clientY
+            var x = aaa.pageX
+            var y = aaa.pageY
             if (!using) { return }
             if (eraserEnable) {
                 ctx.clearRect(x - lineWidth / 2, y - lineWidth / 2, lineWidth, lineWidth)
